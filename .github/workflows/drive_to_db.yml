@@ -43,15 +43,15 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install pandas openpyxl numpy psycopg2-binary gdown sqlalchemy
+          pip install pandas openpyxl numpy psycopg2-binary "psycopg[binary]" gdown sqlalchemy
 
       # ── 5. Download Excel files from Google Drive ──────────────────
-      - name: Download Excel files from Google Drive
+      - name: Download files from Google Drive
         run: |
           mkdir -p data
-          gdown --id ${{ secrets.GDRIVE_INCOME_ID }}   -O data/IncomeStatement.xlsx
-          gdown --id ${{ secrets.GDRIVE_BALANCE_ID }}  -O data/BalanceSheet.xlsx
-          gdown --id ${{ secrets.GDRIVE_CASHFLOW_ID }} -O data/CashFlow.xlsx
+          gdown $GDRIVE_INCOME_ID  -O data/IncomeStatement.xlsx
+          gdown $GDRIVE_BALANCE_ID -O data/BalanceSheet.xlsx
+          gdown $GDRIVE_CASHFLOW_ID -O data/CashFlow.xlsx
 
       # ── 6. Confirm files downloaded ────────────────────────────────
       - name: List data files
